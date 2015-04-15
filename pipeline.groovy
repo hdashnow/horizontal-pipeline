@@ -6,9 +6,18 @@ index_DB = {
 }
 
 map_reads = {
-    exec """
-       /vlsci/VR0002/shared/hdashnow 
-    """
+    transform("1.ebwt","fastq.gz","fastq.gz") {
+        exec """
+            bowtie2 
+            -1 $input1 -2 $input2 
+            -x $input3 
+            | samtools view -bSu - 
+            | samtools sort - $output.prefix"
+            bowtie2 
+            -1 $input1 -2 $input2
+            -x $input3 
+        """
+    }
 }
 
 extract_reads = {
