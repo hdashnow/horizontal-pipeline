@@ -13,5 +13,5 @@ Running it on Merri, here: /vlsci/VR0002/shared/hdashnow
 
 Assuming you've made and are in the horizontal-pipeline/analysis folder:
 
-bpipe run ../pipeline.groovy ../IS.fna
+bpipe run ../pipeline.groovy ../IS.fna ../../simulations/*.fastq
 
