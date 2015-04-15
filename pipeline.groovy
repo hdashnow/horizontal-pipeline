@@ -1,10 +1,10 @@
 
 index_DB = {
-    transform( '.1.bt2', 
-                '.2.bt2', 
-                '.3.bt2', 
-                '.4.bt2', 
-                '.rev.1.bt2', 
+    transform( '.1.bt2',
+                '.2.bt2',
+                '.3.bt2',
+                '.4.bt2',
+                '.rev.1.bt2',
                 '.rev.2.bt2') {
     exec """
         bowtie2-build $input.fna $output1.prefix.prefix
@@ -15,14 +15,14 @@ index_DB = {
 map_reads = {
     transform("1.bt2","fastq.gz","fastq.gz") {
         exec """
-            bowtie2 
-            -1 $input1 -2 $input2 
-            -x $input3 
-            | samtools view -bSu - 
-            | samtools sort - $output.prefix"
-            bowtie2 
+            bowtie2
             -1 $input1 -2 $input2
-            -x $input3 
+            -x $input3
+            | samtools view -bSu -
+            | samtools sort - $output.prefix"
+            bowtie2
+            -1 $input1 -2 $input2
+            -x $input3
         """
     }
 }
@@ -40,7 +40,11 @@ bam_to_fastq = {
    exec """
 	BamToFastq -bam $input.bam -fq1 $output_1.fq -fq2 $output_2.fq
    """
+
+make_manifest ={
+  exec "./make_mira_manifest.pl $input.fq ${input.fq.prefix}.manifest $input.fq.prefix",local
 }
+
 
 assemble = {
     exec """
