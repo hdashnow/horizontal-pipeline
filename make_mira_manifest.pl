@@ -2,13 +2,14 @@
 use warnings;
 use strict;
 
-my $usage = "make_mira_manifest.pl reads.fq outfile assembly_name\n";
+my $usage = "make_mira_manifest.pl left.fq right.fq outfile assembly_name\n";
 
 #Writes a mira manifest file to outfile
 
-my $readsfile = $ARGV[0];
-my $outfile = $ARGV[1];
-my $project_name = $ARGV[2];
+my $leftfile = $ARGV[0];
+my $rightfile = $ARGV[1];
+my $outfile = $ARGV[2];
+my $project_name = $ARGV[3];
 
 unless( open OUT, ">$outfile"){die "Couldn't open $outfile for writing\n$!";}
 
@@ -18,8 +19,9 @@ print OUT "
 
 project = $project_name
 job = genome,denovo,accurate
-readgroup = DataIlluminaLib
-data = $readsfile
+readgroup = DataIlluminaPairedLib
+autopairing
+data = $leftfile $rightfile
 technology = solexa\n";
 
-print STDERR "Written mira manifest file for $project_name\n";
+print STDERR "Wrote mira manifest file for $project_name\n";

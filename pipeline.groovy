@@ -28,8 +28,22 @@ map_reads = {
 
 extract_reads = {
     exec """
+	samtools view -u -f 4 -F 264 $input.prefix > tmps1.bam 
+	| samtools view -u -f 8 -F 260 $input.prefix > tmps2.bam
+	| samtools view -b -F 4 $input.prefix > tmps3.bam
+	| samtools merge -u $output.bam tmps1.bam tmps2.bam tmps3.bam	
     """
 }
+
+bam_to_fastq = {
+   exec """
+	BamToFastq -bam $input.bam -fq1 $output_1.fq -fq2 $output_2.fq
+   """
+
+make_manifest ={
+  exec "./make_mira_manifest.pl $input.fq ${input.fq.prefix}.manifest $input.fq.prefix",local
+}
+
 
 assemble = {
     exec """
