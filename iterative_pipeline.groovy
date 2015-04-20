@@ -1,8 +1,8 @@
 
 // Split reference multifasta into individual fasta files
 split_DB = {
-    transform('.fa') {
-        output.dir="individual_fasta"
+    output.dir="individual_fasta"
+    produce('*.fa') {
         exec """
           cd $dir && /vlsci/VR0002/shared/hdashnow/bin/split_fasta.pl ../$input.fna && cd .. 
         """
@@ -26,7 +26,7 @@ iterative_assembler = {
 }
 
 run {
-//    split_DB +
+    split_DB +
     "%.fa" * [ 
         iterative_assembler
     ]
