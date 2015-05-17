@@ -1,3 +1,5 @@
+// This content is released under the MIT License. See LICENSE.md for more details
+
 
 // Split reference multifasta into individual fasta files
 split_DB = {

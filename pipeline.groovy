@@ -1,3 +1,5 @@
+// This content is released under the MIT License. See LICENSE.md for more details
+
 
 index_DB = {
     branch.DBname = output1.prefix.prefix
